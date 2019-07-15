@@ -11,10 +11,8 @@ export class AppComponent implements OnInit {
   counter = 0;
   socket = io('http://localhost:3333');
   ngOnInit(): void {
-    
+ 
     this.socket.on('connect', () => {
-      console.log('Connected');
-
       this.socket.emit('events', { test: 'test' });
 
       this.socket.emit('identity', 'Atul', response =>
@@ -24,7 +22,7 @@ export class AppComponent implements OnInit {
 
     this.socket.on('events', (data: any) => {
       this.counter = this.counter + 1;
-      console.log('event', data);
+      console.log('on event', { data: data, counter: this.counter });
     });
 
     this.socket.on('exception', data => {

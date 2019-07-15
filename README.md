@@ -59,6 +59,13 @@ Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The 
 
 Run `ng g component my-component --project=my-app` to generate a new component.
 
+Run `ng generate @nestjs/schematics:library post-special --prefix=ms --dry-run` to generate new library
+
+Run `ng generate @nestjs/schematics:controller post-special --module=post-special --path=libs --dry-run` to add nestjs controller with new library
+
+Run `ng generate @nestjs/schematics:controller post-special --path=post-special/src --sourceRoot=libs --module=post-special --flat=true --dry-run` to add controller to an existing nest library
+
+Run ` ng generate @nestjs/schematics:controller post-special --path=sale-api/src/app --sourceRoot=apps --module=app --flat=true --dry-run` to add controller to an existing nest application
 ## Build
 
 Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
