@@ -7,5 +7,15 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "sale-client-e2e": {
+      "tags": []
+    },
+    "sale-client": {
+      "tags": []
+    },
+    "sale-api": {
+      "tags": []
+    }
+  }
 }

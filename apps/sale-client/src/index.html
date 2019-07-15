@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SaleClient</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <wsapp-root></wsapp-root>
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"
+      integrity="sha256-i2Orhi397HWPn93rsCUTW8HBoso65vY/VNTllm9Kuqo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const socket = io('http://localhost:3333');
+      socket.on('connect', function() {
+        console.log('Connected');
+
+        socket.emit('events', { test: 'test' });
+        socket.emit('identity', 'Atul', response =>
+          console.log('Identity:', response)
+        );
+      });
+      socket.on('events', function(data) {
+        console.log('event', data);
+      });
+      socket.on('exception', function(data) {
+        console.log('event', data);
+      });
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+    </script> -->
+  </body>
+</html>

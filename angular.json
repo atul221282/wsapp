@@ -2,13 +2,204 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "sale-client": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/sale-client",
+      "sourceRoot": "apps/sale-client/src",
+      "prefix": "wsapp",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/sale-client",
+            "index": "apps/sale-client/src/index.html",
+            "main": "apps/sale-client/src/main.ts",
+            "polyfills": "apps/sale-client/src/polyfills.ts",
+            "tsConfig": "apps/sale-client/tsconfig.app.json",
+            "assets": [
+              "apps/sale-client/src/favicon.ico",
+              "apps/sale-client/src/assets"
+            ],
+            "styles": [
+              "apps/sale-client/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/sale-client/src/environments/environment.ts",
+                  "with": "apps/sale-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sale-client:build",
+            "proxyConfig": "apps/sale-client/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sale-client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sale-client:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/sale-client/tsconfig.app.json",
+              "apps/sale-client/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sale-client/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/sale-client/jest.config.js",
+            "tsConfig": "apps/sale-client/tsconfig.spec.json",
+            "setupFile": "apps/sale-client/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "sale-client-e2e": {
+      "root": "apps/sale-client-e2e",
+      "sourceRoot": "apps/sale-client-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/sale-client-e2e/cypress.json",
+            "tsConfig": "apps/sale-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "sale-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sale-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/sale-client-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sale-client-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "sale-api": {
+      "root": "apps/sale-api",
+      "sourceRoot": "apps/sale-api/src",
+      "projectType": "application",
+      "prefix": "sale-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/sale-api",
+            "main": "apps/sale-api/src/main.ts",
+            "tsConfig": "apps/sale-api/tsconfig.app.json",
+            "assets": [
+              "apps/sale-api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/sale-api/src/environments/environment.ts",
+                  "with": "apps/sale-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "sale-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/sale-api/tsconfig.app.json",
+              "apps/sale-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/sale-api/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/sale-api/jest.config.js",
+            "tsConfig": "apps/sale-api/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
       "versionMismatch": false
     },
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/angular"
   },
-  "schematics": {}
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "sale-client"
 }
